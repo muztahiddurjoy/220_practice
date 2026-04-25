@@ -10,7 +10,7 @@ public class LevelOrderTraversal {
         root.right = new Node(3);
         root.left.left = new Node(4);
         root.left.right = new Node(5);
-        levelOrder(root);
+        levelOrder2(root);
     }
 
     static void levelOrder(Node root){
@@ -30,5 +30,27 @@ public class LevelOrderTraversal {
         }
         
        }
+    }
+
+    static void levelOrder2(Node root){
+        if(root==null){
+            return;
+        }
+        Queue<Node> q = new LinkedList<>();
+        q.add(root);
+        while (!q.isEmpty()) {
+            int levelSize = q.size();
+            for (int i = 0; i < levelSize; i++) {
+                Node val = q.poll();
+                System.out.print(val.value+" ");
+                if(val.left!=null){
+                    q.add(val.left);
+                }
+                if(val.right!=null){
+                    q.add(val.right);
+                }
+            }
+            System.out.println();
+        }
     }
 }
