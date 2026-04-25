@@ -1,6 +1,6 @@
 package binary_tree;
 
-public class Second {
+public class PostOrder {
     public static void main(String[] args) {
         Node root = new Node(1);
         root.left = new Node(2);
@@ -8,14 +8,15 @@ public class Second {
         root.left.left = new Node(4);
         root.left.right = new Node(5);
 
-        printIntOrder(root);
+        printPostOrder(root);
     }
-    public static void printIntOrder(Node root){
+
+    public static void printPostOrder(Node root){
         if(root==null){
             return;
         }
-        printIntOrder(root.left);
+        printPostOrder(root.left);
+        printPostOrder(root.right);
         System.out.println(root.value);
-        printIntOrder(root.right);
     }
 }

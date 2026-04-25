@@ -1,6 +1,6 @@
 package binary_tree;
 
-public class First {
+public class PreOrder {
     public static void main(String[] args) {
         Node root = new Node(1);
         root.left = new Node(2);
