@@ -8,66 +8,76 @@ public class MaxHeap {
     public MaxHeap(int capacity){
         this.size = 0;
         this.capacity = capacity;
-        this.heap = new int[capacity];
+        this.heap = new int[capacity+1];
+    }
+    
+    private int getParentIndex(int i){
+        return i/2;
     }
 
-    private int parent(int i){
-        return (i-1)/2;
+    private int getleftChild(int i){
+        return 2*i;
     }
-    private int leftChild(int i){
-        return (i*2)+1;
-    }
-    private int rightChild(int i){
-        return (i*2)+2;
+    private int getRightChild(int i){
+        return 2*i+1;
     }
 
-    private void swap(int i, int j){
-        int temp = heap[i];
-        heap[i] = heap[j];
-        heap[j] = temp;
+    private void swap(int i1, int i2){
+        int temp  = heap[i1];
+        heap[i1]=heap[i2];
+        heap[i2]=temp;
     }
-    public int getMax(){
-        if(size==0){
-            System.out.println("Heap is empty");
-            return -1;
-        }
-        return heap[0];
-    }
-
-    public void insert(int key){
+    public void insert(int elem){
         if(size==capacity){
-            System.out.println("Heap is full!");
+            System.out.println("Cannot add more");
             return;
         }
-        heap[size] = key;
-        int current = size;
-        size++;
-
-        while(current>0 && heap[current]>heap[parent(current)]){
-            swap(current, parent(current));
-            current = parent(current);
-        }
+        heap[++size] = elem;
+        heapifyUp();
     }
 
-    public int extractMax(){
+    public int deleteMax(){
         if(size==0){
             return -1;
         }
-        int max = heap[0];
-        heap[0] = heap[--size];
+        int max = heap[1];
+        swap(1, size--);
+        heapifyDown();
         return max;
     }
 
-    public void maxHeapify(int index){
-        int largest = index;
-        int left = leftChild(index);
-        int right = rightChild(index);
-
-        if(left < size && heap[left] > heap[largest]){
-            largest = left;
+    private void heapifyUp(){
+        if(size==0){
+            return;
         }
+        int index = size;
+        while(index>1 && heap[index]<heap[getParentIndex(index)]){
+            swap(index,getParentIndex(index));
+            index = getParentIndex(index);
+        }
+    }
 
-        if(right < size && heap[])
+    private void heapifyDown(){
+        if(size==0){
+            return;
+        }
+        int index = 1;
+        while(true){
+            int leftChildIndex = getleftChild(index);
+            int rightChildIndex = getRightChild(index);
+            int largestIndex = index;
+            if(leftChildIndex<=size && heap[leftChildIndex]>heap[largestIndex]){
+                largestIndex = leftChildIndex;
+            }
+            if(rightChildIndex<=size && heap[rightChildIndex]>heap[largestIndex]){
+                largestIndex = rightChildIndex;
+            }
+            if(index==largestIndex){
+                return;
+            }
+            swap(index, largestIndex);
+            index = largestIndex;
+        }
     }
 
 }

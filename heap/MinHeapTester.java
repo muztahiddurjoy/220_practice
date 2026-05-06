@@ -59,7 +59,7 @@ class MinHeap{
         }
         int index = size;
         int parentIndex= getParent(index);
-        while(index>0 && heap[index]<heap[parentIndex]){
+        while(index>1 && heap[index]<heap[parentIndex]){
             swap(index, parentIndex);
             index = parentIndex;
             parentIndex = getParent(index);
@@ -96,5 +96,31 @@ class MinHeap{
             swap(index, smallestIndex);
             index = smallestIndex;
         }
+    }
+
+    public int getMin(){
+        if(size==0){
+            System.out.println("Heap is empty");
+            return -1;
+        }
+        return heap[1];
+    }
+    
+    public void deleteMin(){
+        if(size==0){
+            System.out.println("Heap is empty");
+            return;
+        }
+        heap[1] = heap[size--];
+        heapifyDown();
+    }
+
+    public void delete(int index){
+        if(index<1 || index>size){
+            System.out.println("Invalid index");
+            return;
+        }
+        heap[index] = heap[size--];
+        heapifyDown();
     }
 } 
