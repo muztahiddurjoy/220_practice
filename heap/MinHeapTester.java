@@ -115,6 +115,16 @@ class MinHeap{
         heapifyDown();
     }
 
+    public int extract(){
+        if(size==0){
+            return -1;
+        }
+        int min = heap[1];
+        heap[1] = heap[size--];
+        heapifyDown();
+        return min; 
+    }
+
     public void delete(int index){
         if(index<1 || index>size){
             System.out.println("Invalid index");
