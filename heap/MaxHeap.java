@@ -46,12 +46,23 @@ public class MaxHeap {
         return max;
     }
 
+    public int extract(){
+        if(size==0){
+            System.out.println("no elems");
+            return -1;
+        }
+        int max = heap[1];
+        swap(1, size--);
+        heapifyDown();
+        return max;
+    }
+
     private void heapifyUp(){
         if(size==0){
             return;
         }
         int index = size;
-        while(index>1 && heap[index]<heap[getParentIndex(index)]){
+        while(index>1 && heap[index]>heap[getParentIndex(index)]){
             swap(index,getParentIndex(index));
             index = getParentIndex(index);
         }
