@@ -1,9 +1,9 @@
 package heap;
 
 public class MaxHeap {
-    int[] heap;
-    int size;
-    int capacity;
+    private int[] heap;
+    private int size;
+    private int capacity;
 
     public MaxHeap(int capacity){
         this.size = 0;
@@ -89,6 +89,19 @@ public class MaxHeap {
             swap(index, largestIndex);
             index = largestIndex;
         }
+    }
+
+    public int getIndex(int elem){
+        for (int i = 1; i <= size; i++) {
+            if(heap[i]==elem){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public int size(){
+        return size;
     }
 
 }
