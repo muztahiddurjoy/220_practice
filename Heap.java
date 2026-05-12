@@ -1,7 +1,12 @@
 public class Heap {
 
     // Helper class for MinHeap logic
-    public static class MinHeap {
+       // MaxHeap implementation follows similar logic with reversed comparisons
+   
+}
+
+
+class MinHeap {
         private Integer[] heap;
         private int capacity;
         private int size;
@@ -107,8 +112,8 @@ public class Heap {
         }
     }
 
-    // MaxHeap implementation follows similar logic with reversed comparisons
-    public static class MaxHeap {
+
+     class MaxHeap {
         private Integer[] heap;
         private int capacity;
         private int size;
@@ -142,4 +147,3 @@ public class Heap {
             return size == 0;
         }
     }
-}
