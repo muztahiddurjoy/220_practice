@@ -27,21 +27,15 @@ public class AdjacencyListCustom {
     //addEdge(1,3)
     public void addEdge(int v1, int v2){
         //one direction edge
-        if(adjList[v1]==null){
-            adjList[v1] = new Node(v2);
-        }
-        else{
+       
             Node temp = adjList[v1];
             adjList[v1] = new Node(v2, temp);
-        }
+       
         //second direction edge
-        if(adjList[v2]==null){
-            adjList[v2] = new Node(v1);
-        }
-        else{
-            Node temp = adjList[v2];
-            adjList[v2] = new Node(v1, temp);
-        }
+       
+            Node temp1 = adjList[v2];
+            adjList[v2] = new Node(v1, temp1);
+       
     }
 
     public void removeEdge(int v1, int v2){
