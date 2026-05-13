@@ -2,7 +2,7 @@ package binary_tree;
 
 public class Node {
 
-    public int value;
+    public Integer value;
     public Node left;
     public Node right;
     
