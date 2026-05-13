@@ -1,18 +1,23 @@
 package graph.final_questions;
 
 /**
- * This program finds the pair of friends that have the most mutual friends
- * in a social network represented as an undirected graph using an adjacency matrix.
+ * This program finds the pair of people who share the most mutual friends
+ * in a social network represented as an undirected graph.
+ *
+ * Example use:
+ * If Alice and Harry both know Nimo, then Nimo is a mutual friend of that pair.
+ * The program compares every pair and prints the pair with the highest count.
  */
 public class MutualFriends {
     public static void main(String[] args) {
-        // Array of friend names - each index represents a person in the network
+        // Names for each node in the graph.
+        // Index 0 means Alice, index 1 means Harry, and so on.
         String[] friends = {"Alice", "Harry", "Nimo", "Nimas","Bob","Moana"};
         
-        // Adjacency matrix representing the friendship graph
-        // am[i][j] = 1 means person i and person j are friends
-        // am[i][j] = 0 means person i and person j are NOT friends
-        // The matrix is symmetric since friendships are mutual (undirected graph)
+        // Adjacency matrix for the friendship graph.
+        // am[i][j] = 1 means person i is directly connected to person j.
+        // Because the graph is undirected, the matrix is symmetric.
+        // Example: am[0][1] = 1 means Alice and Harry are friends.
         int[][] am = 
         {
             {0,1,1,0,0,0},      // Alice (0): friends with Harry, Nimo
@@ -29,46 +34,50 @@ public class MutualFriends {
 
 
     /**
-     * Finds the pair of friends with the maximum number of mutual friends
+     * Finds the pair of people with the maximum number of mutual friends.
+     *
+     * How it works:
+     * 1. Pick one pair of people.
+     * 2. Scan all other people.
+     * 3. Count how many are friends with both members of the pair.
+     * 4. Keep the pair with the highest count.
      * 
      * @param g - adjacency matrix representing the friendship graph
      * @param mapper - array of names corresponding to each person (index)
      */
     public static void maxMutual(int[][] g, String[] mapper){
-        // Variables to track the pair with the most mutual friends
-        String user1="";        // Name of first friend in the best pair
-        String user2="";        // Name of second friend in the best pair
-        int mutual = 0;         // Count of mutual friends for the current best pair
+        // Store the best pair found so far.
+        String user1="";
+        String user2="";
+        int mutual = 0;
         
-        // Outer loop: iterate through the first friend (person i)
+        // Try every pair once: (0,1), (0,2), ..., (n-2,n-1).
         for (int i = 0; i < mapper.length-1; i++) {
             
-                // Inner loop: iterate through the second friend (person j)
-                // Start from i+1 to avoid counting the same pair twice
-                for (int j = i+1; j < mapper.length; j++) {
-                    int tempMutual = 0;  // Counter for mutual friends between person i and j
-                    
-                    // Innermost loop: check all other people to find mutual friends
-                    // A mutual friend is someone who is friends with BOTH person i and person j
-                    for (int k = 0; k < mapper.length; k++) {
-                        // If g[i][k]==1, person i is friends with person k
-                        // If g[j][k]==1, person j is friends with person k
-                        // If both are true, person k is a mutual friend
-                        if(g[i][k]==1 && g[j][k]==1){
-                            tempMutual++;  // Increment the mutual friend count
-                        }
-                    }
-                    
-                    // Check if this pair has more mutual friends than the current maximum
-                    if(tempMutual>mutual){
-                        mutual = tempMutual;        // Update the maximum count
-                        user1 = mapper[i];          // Update first friend name
-                        user2 = mapper[j];          // Update second friend name
+            // Choose the second person in the pair.
+            // Start from i + 1 so the same pair is not checked twice.
+            for (int j = i+1; j < mapper.length; j++) {
+                int tempMutual = 0;
+                
+                // Check every person as a possible mutual friend.
+                // A person counts only if they are connected to both i and j.
+                for (int k = 0; k < mapper.length; k++) {
+                    if(g[i][k]==1 && g[j][k]==1){
+                        tempMutual++;
                     }
                 }
+                
+                // Keep the pair with the largest mutual-friend count.
+                if(tempMutual>mutual){
+                    mutual = tempMutual;
+                    user1 = mapper[i];
+                    user2 = mapper[j];
+                }
+            }
         }
         
-        // Print the result: the pair with the most mutual friends
+        // Example output:
+        // "Harry and Nimo has most mutual friends (2)"
         System.out.println(user1+ " and "+user2+" has most mutual friends ("+mutual+")");
     }
 }
