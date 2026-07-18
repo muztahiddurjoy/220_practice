@@ -1,0 +1,192 @@
+//T1
+public static String buildingBlocks(Node building1, Node building2) {
+	Node temp1=building1;
+	Node temp2 = building2;
+
+	while(temp1!=null && temp2!=null) {
+	    if (temp1.elem.equals(temp2.elem)==false) {
+			return "Not Similar";
+	    }
+		temp1 = temp1.next;
+		temp2=temp2.next;
+	}
+
+	if(temp1 != null) {
+	   return "Not Similar";
+	}
+	if (temp2!=null) {
+		return "Not Similar";
+	}
+
+	return "Similar";
+}
+
+//T2
+public static Node organizeBooks(Node head, int[] popularity) {
+    int n=popularity.length;
+
+	int i = 0;
+	while(i < n-1) {
+
+	    Node current=head;
+		int j=0;
+	    while (j < n-1-i) {
+	 		Node nextNode = current.next;
+
+			if(popularity[j] < popularity[j+1]) {
+			    Object tempBook=current.elem;
+				current.elem = nextNode.elem;
+			    nextNode.elem=tempBook;
+
+				int tempScore = popularity[j];
+			 	popularity[j]=popularity[j+1];
+				popularity[j+1] = tempScore;
+			}
+
+		    current=current.next;
+			j = j+1;
+	    }
+		i=i+1;
+	}
+
+    return head;
+}
+
+//T3
+public static Node alternate_merge(Node head1, Node head2) {
+	Node temp1 = head1;
+    Node temp2=head2;
+
+	while (temp1!=null && temp2!=null) {
+	    Node next1=temp1.next;
+		Node next2 = temp2.next;
+
+		temp1.next=temp2;
+
+	    if(next1 != null) {
+			temp2.next = next1;
+	    }
+
+		temp1=next1;
+	 	temp2 = next2;
+	}
+
+	return head1;
+}
+
+//T4
+public static Node idGenerator(Node head1, Node head2, Node head3) {
+    Node newHead=null;
+
+	Node temp1 = head1;
+	while(temp1 != null) {
+	    Node newNode=new Node(temp1.elem);
+		newNode.next = newHead;
+	 	newHead=newNode;
+		temp1 = temp1.next;
+	}
+
+	Node tail=newHead;
+    while (tail.next!=null) {
+		tail = tail.next;
+	}
+
+	Node temp2 = head2;
+	Node temp3=head3;
+	while(temp2!=null && temp3!=null) {
+		int a = (int) temp2.elem;
+	    int b=(int) temp3.elem;
+
+		int sum=a+b;
+	    if (sum>=10) {
+			sum = sum%10;
+	    }
+
+		Node newNode=new Node(sum);
+	 	tail.next = newNode;
+		tail=newNode;
+
+	    temp2 = temp2.next;
+		temp3=temp3.next;
+	}
+
+	return newHead;
+}
+
+//T5
+public static void sumOddAppend(Node head) {
+	int sum=0;
+
+    Node prev = head;
+	Node current=head.next;
+
+	while(current != head) {
+	    int value=(int) current.elem;
+
+		if (value%2 != 0) {
+	    	sum=sum+value;
+			prev.next = current.next;
+		    current=current.next;
+		}
+		else {
+			prev = current;
+	 	    current=current.next;
+		}
+	}
+
+	Node sumNode=new Node(sum);
+	sumNode.next = head;
+    prev.next=sumNode;
+}
+
+//T6
+public static void pairJoin(Node head1, Node head2) {
+    Node temp1=head1.next;
+	Node temp2 = head2.next;
+
+	while (temp1!=head1 && temp1!=null) {
+		Node next1 = temp1.next;
+	    Node next2=temp2.next;
+
+		temp1.next=temp2;
+	 	temp2.prev = temp1;
+		temp2.next=next1;
+	    if(next1 != null) {
+			next1.prev=temp2;
+	    }
+
+		temp1 = next1;
+	    temp2=next2;
+	}
+}
+
+//T7
+public static void rangeMove(Node head, int start, int end) {
+	int count=0;
+    Node temp = head.next;
+	while(temp != head) {
+	    count=count+1;
+		temp = temp.next;
+	}
+
+	Node current=head.next;
+	int i = 0;
+	while (i<count) {
+	    Node nextNode=current.next;
+
+		int value = (int) current.elem;
+	    if(value>=start && value<=end) {
+			current.prev.next = current.next;
+		    current.next.prev=current.prev;
+
+			Node last=head.prev;
+	 		last.next = current;
+			current.prev=last;
+		    current.next = head;
+			head.prev=current;
+	    }
+
+		current = nextNode;
+	    i=i+1;
+	}
+}
